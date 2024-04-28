@@ -129,7 +129,7 @@
     <div class="title">PIXEL COINSHOP</div>
   </div>
   <input type="text" id="nameInput" placeholder="Enter your Pixels username">
-  <input type="number" id="numberInput" placeholder="Enter amount in Coins" min="100" max="2000">
+  <input type="number" id="numberInput" placeholder="Enter amount in Coins" min="664" max="2000">
   <div class="button-container">
     <input type="button" value="Calculate" onclick="calculate()">
     <input type="button" class="buy-button" value="Buy Coins" onclick="copyResultAndInput()" disabled>
@@ -149,8 +149,8 @@
       alert("Please enter your Pixels username.");
       return;
     }
-    if (isNaN(coins) || coins < 100 || coins > 2000) {
-      alert("Please enter a valid coins between 100 and 2,000.");
+    if (isNaN(coins) || coins < 664 || coins > 2000) {
+      alert("Please enter a valid coins between 664 and 2,000.");
       return;
     }
     var cost = (coins * 0.0015).toFixed(2);
