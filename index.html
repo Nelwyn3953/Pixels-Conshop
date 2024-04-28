@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixels Coinshop</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #70C5CE; /* Sky blue */
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpQUjkxbimSEWV5cbNXvSHQAFJrWa4hHiHLFEOsBPQit6ESnw_kfF-k5JO&s=10'); /* Updated background image */
+    background-size: cover; /* Cover the entire viewport */
+    background-position: center; /* Center the background image */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .calculator {
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* White with transparency */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #fff; /* Added border for better contrast */
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .logo img {
+    width: 80px;
+    height: auto;
+    margin-right: 10px;
+  }
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Darker text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+  }
+  input[type="text"],
+  input[type="number"] {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+    transition: box-shadow 0.3s ease;
+  }
+  input[type="text"]:focus,
+  input[type="number"]:focus {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Darker shadow effect on focus */
+  }
+  .button-container {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    margin-top: 20px;
+  }
+  input[type="button"] {
+    width: 45%; /* Adjusted button width */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ED1C24; /* Mario red */
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+    transition: background-color 0.3s ease;
+    text-transform: uppercase; /* Uppercase button text */
+  }
+  .buy-button {
+    background-color: #F7931E; /* Mario orange */
+  }
+  input[type="button"]:hover,
+  .buy-button:hover {
+    background-color: #C4161C; /* Darker red for hover effect */
+  }
+  #result {
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    transition: opacity 0.3s ease;
+    clear: both; /* Clear floating elements */
+  }
+  .buy-button:disabled {
+    background-color: #ccc; /* Disabled button color */
+    cursor: not-allowed;
+  }
+  .mario {
+    position: absolute;
+    bottom: 0;
+    right: -120px; /* Initial position outside the calculator */
+    width: 120px;
+    z-index: -1;
+    transition: transform 0.5s ease, right 0.5s ease; /* Added right transition */
+  }
+  .calculator:hover .mario {
+    transform: translateX(-100%);
+    right: 0; /* Move Mario back into the calculator */
+  }
+  .minfo {
+    text-align: none;
+    text-decoration: none;
+    color: grey;
+    width: 5px;
+    height: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+  <div class="logo">
+    <img src="https://thelukewest.wordpress.com/wp-content/uploads/2016/11/coin-shine1.gif" alt="Coins">
+    <div class="title">PIXEL COINSHOP</div>
+  </div>
+  <input type="text" id="nameInput" placeholder="Enter your Pixels username">
+  <input type="number" id="numberInput" placeholder="Enter amount in Coins" min="100" max="2000">
+  <div class="button-container">
+    <input type="button" value="Calculate" onclick="calculate()">
+    <input type="button" class="buy-button" value="Buy Coins" onclick="copyResultAndInput()" disabled>
+  </div>
+  <p id="result"></p>
+  <img src="https://assets-global.website-files.com/62be13fdb8a06d0f7cf4aa7b/633785a0ab4d880113004499_Bobu--website.gif" alt="Mario" class="mario">
+  <a href="#"
+  <p class="minfo">More info</p>
+  </a>
+</div>
+
+<script>
+  function calculate() {
+    var name = document.getElementById("nameInput").value;
+    var coins = document.getElementById("numberInput").value;
+    if (!name.trim()) {
+      alert("Please enter your Pixels username.");
+      return;
+    }
+    if (isNaN(coins) || coins < 100 || coins > 2000) {
+      alert("Please enter a valid coins between 100 and 2,000.");
+      return;
+    }
+    var cost = (coins * 0.0015).toFixed(2);
+    document.getElementById("result").innerHTML = `Hi ${name}, the cost is ₱${cost}`;
+    document.querySelector(".buy-button").disabled = false;
+  }
+
+  function copyResultAndInput() {
+    var name = document.getElementById("nameInput").value;
+    var coins = document.getElementById("numberInput").value;
+    var cost = document.getElementById("result").innerHTML;
+    var textToCopy = `Name: ${name}\nCoins: ${coins}\n${cost}`;
+    navigator.clipboard.writeText(textToCopy)
+      .then(function() {
+        alert("Name, cost, and coins copied to clipboard!");
+        window.location.href = "https://m.me/nelhakuna";
+        window.location.href = "https://m.me/nelhakuna";
+      })
+      .catch(function(error) {
+        console.error("Error copying text: ", error);
+      });
+  }
+</script>
+
+</body>
+</html>
